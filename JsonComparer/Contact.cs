@@ -9,5 +9,8 @@ namespace JsonComparer
 
         [JsonPropertyName("email")]
         public string Email { get; set; }
+
+        [JsonPropertyName("type")]
+        public List<string> Type { get; set; }
     }
 }

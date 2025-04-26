@@ -4,13 +4,14 @@
     {
         public static List<string> CompareDictionaries(Dictionary<string, object> originalDictionary, Dictionary<string, object> counterPartyDictonary)
         {
+            
             var differences = new List<string>();
 
             foreach (var kvp in originalDictionary)
             {
                 if (!counterPartyDictonary.ContainsKey(kvp.Key))
                 {
-                    differences.Add($"Missing key in second dictionary: {kvp.Key}");
+                    differences.Add($"Missing key in second dictionary: {kvp.Key} and {kvp.Value}");
                 }
                 else
                 {

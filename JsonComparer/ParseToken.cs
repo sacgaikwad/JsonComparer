@@ -25,7 +25,17 @@ namespace JsonComparer
                     {
                         foreach (var childProp in prop.Value.Children<JProperty>())
                         {
-                            dict[childProp.Path] = childProp.Value;
+                            if (childProp.Value.Type == JTokenType.Array)
+                            {
+                                foreach (var item in childProp.Value.Children())
+                                {
+                                    dict[item.Path] = item;
+                                }
+                            }
+                            else
+                            {
+                                dict[childProp.Path] = childProp.Value;
+                            }
                         }
                     }
                     if (prop.Value.Type != JTokenType.Array && prop.Value.Type != JTokenType.Object && prop.Value.Type != JTokenType.Property)
