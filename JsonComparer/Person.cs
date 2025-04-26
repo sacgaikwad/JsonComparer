@@ -12,5 +12,8 @@ namespace JsonComparer
 
         [JsonPropertyName("city")]
         public string City { get; set; }
+
+        [JsonPropertyName("contact")]
+        public Contact Contact { get; set; }
     }
 }

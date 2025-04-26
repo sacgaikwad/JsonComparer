@@ -1,35 +1,21 @@
-﻿using Newtonsoft.Json;
-
-namespace JsonComparer
+﻿namespace JsonComparer
 {
     public class Program
     {
         public static async Task Main()
         {
             int thresholdCount = 1;
-            string originalMessage = "{\"name\":\"Sachin\",\"age\":30,\"city\":\"New York\"}";
-            string counterPartyMessage = "{\"name\":\"Sachin\",\"age\":31,\"city\":\"New York\"}";
+            string originalMessage = "{ \"Name\": \"Sachin\",\"Age\": 30, \"City\": \"New York\", \"Contact\": { \"MobileNumber\": 98855226612,\"Email\": \"test@test.com\"}}";
+            string counterPartyMessage = "{ \"Name\": \"Sachin\",\"Age\": 31, \"City\": \"New York\", \"Contact\": { \"MobileNumber\": 98855226611,\"Email\": \"test@test.com\"}}";
 
-            //Original Message
-            var originalPerson = JsonConvert.DeserializeObject<Person>(originalMessage);
-            Dictionary<string, Person> originalMessageDictionary = new()
+            var original = DictionaryComparer.ConvertJsonToDictionary(originalMessage);
+            var counterParty = DictionaryComparer.ConvertJsonToDictionary(counterPartyMessage);
+
+            var modifiedValues = DictionaryComparer.CompareDictionaries(original, counterParty);
+
+            if (modifiedValues.Count >= thresholdCount)
             {
-                { "Message", originalPerson }
-            };
-
-            //CounterParty Message
-            var counterPartyPerson = JsonConvert.DeserializeObject<Person>(counterPartyMessage);
-            Dictionary<string, Person> countertPartyMessageDictionary = new()
-            {
-                { "Message", counterPartyPerson }
-            };
-
-            var modifiedValues = DictionaryComparer.GetModifiedValues(originalMessageDictionary, countertPartyMessageDictionary);
-            var modifiedCount = modifiedValues.Count;
-
-            if (modifiedCount >= thresholdCount)
-            {
-                Console.WriteLine($"Message is modified more than threshold: {modifiedCount}");
+                Console.WriteLine($"Message is modified more than threshold: {modifiedValues.Count}");
             }
             else
             {
