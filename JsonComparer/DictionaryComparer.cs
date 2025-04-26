@@ -10,10 +10,10 @@
 
             foreach (var kvp in original)
             {
-                if (modified.ContainsKey(kvp.Key))
+                if (modified.TryGetValue(kvp.Key, out Person? value))
                 {
                     var originalPerson = kvp.Value;
-                    var modifiedPerson = modified[kvp.Key];
+                    var modifiedPerson = value;
 
                     if (originalPerson.Name.Equals(modifiedPerson.Name) == false)
                     {
